@@ -70,10 +70,10 @@ router.get("/edit/:id", ensureAuth, async (req, res) => {
 //@route  PUT /stories/:id
 router.put("/:id", ensureAuth, async (req, res) => {
   try {
-    let story = await Story.findById(req.params.id);
+    let story = await Story.findById(req.params.id).lean();
     // Check Story Availibility
     if (!story) {
-      return res.render("error/400");
+      return res.render("error/404");
     }
     // Check User Auth
     if (story.user != req.user.id) {
